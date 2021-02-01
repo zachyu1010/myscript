@@ -15,7 +15,7 @@ lineLen = 32
 with open(iFile, 'r') as ifd:
     with open(oFile, 'wb') as ofd: 
         for x in ifd:
-            b = [int('0x' + str(x[i:i+2]), 16) for i in range(lineLen) if i %2 == 0]
+            b = [int('0x' + str(x[i:i+2]), 16) for i in range(lineLen) if i % 2 == 0]
             b.reverse()
             
             ofd.write(bytes(b))

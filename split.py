@@ -2,8 +2,8 @@
 
 import sys
 
-help_msg = """usage: ./split num string
-    num tells split cmmand to chunk the string by the num number."""
+help_msg = """usage: ./split num grp string
+    num tells split cmmand to chunk the string by the num number and then group with grp."""
 
 if (len(sys.argv) != 4):
     print(help_msg)
