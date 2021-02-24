@@ -2,8 +2,8 @@ set height unlimited
 
 set $mMacCnt = -1
 
-set $mMacSt = 0
-set $mMacEnd = 3
+set $mMacSt = 1
+set $mMacEnd = 1
 set $mCoreId = 0
 set $mOchGrp = 0
 set $mOch = 0
@@ -17,6 +17,18 @@ silent
 set $mMacCnt = $mMacCnt + 1
 continue
 end
+
+b kl_out_conv_store.cpp:403
+
+#KLConvMAC::DoBunchConv1x1
+b kl_eu_conv_mac.cpp:3012 if ($mMacSt <= $mMacCnt && $mMacCnt <= $mMacEnd) && id == $mCoreId && ochGrp == $mOchGrp && och == $mOch && rf == $mRf && c == $mC
+commands
+silent
+printf "========================================== (%d, %d: %d, %d, %d)\n", $mMacCnt, id, ochGrp, rf, c
+printf "%dx%d=%d\n", mac_a1, mac_b1, mac_r1
+continue
+end
+
 
 #KLConvMAC::DoBunchConv3x3DW
 b kl_eu_conv_mac.cpp:3420 if ($mMacSt <= $mMacCnt && $mMacCnt <= $mMacEnd) && id == $mCoreId && ochGrp == $mOchGrp && och == $mOch && rf == $mRf && c == $mC
