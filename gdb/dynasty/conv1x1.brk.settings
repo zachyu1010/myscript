@@ -1,0 +1,11 @@
+break SigmoidOperator<int>::Run()
+break ConvOperator<int>::Run()
+break KL530Operator.cpp:902
+  commands
+    silent
+    if och == 0 && r == 0 && c == 0
+      printf "%d. %d, %d, %d\n", ch, data, weight, product
+    end
+    continue
+  end
+disable $bpnum

@@ -19,6 +19,5 @@ define hookpost-x
 end
 
 define hook-stop
-	handle SIGALRM nopass
 	refresh
 end
