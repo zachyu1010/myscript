@@ -1,3 +1,5 @@
+set confirm off
+
 define hookpost-interrupt
 end
 
@@ -13,5 +15,10 @@ end
 define hookpost-x
 end
 
-define hook-stop
+define hookpost-stop
 end
+
+define hookpost-ptype
+end
+
+set confirm on

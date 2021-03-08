@@ -1,3 +1,5 @@
+set confirm off
+
 define hookpost-interrupt
 	refresh
 end
@@ -18,6 +20,12 @@ define hookpost-x
 	refresh
 end
 
-define hook-stop
+define hookpost-stop
 	refresh
 end
+
+define hookpost-ptype
+	refresh
+end
+
+set confirm on

@@ -1,9 +1,8 @@
 set height unlimited
 
-break kl_cmd_dispatcher.cpp:907
-  condition $bpnum ++$count == 129
-break KLConvMAC::run
-break DoActivation
+set $convnum = 0
+set $count = -1
+break kl_cmd_dispatcher.cpp:907 if ++$count == 126
 break kl_cmd_dispatcher.cpp:911
   commands
     set $count = $count+1
@@ -14,6 +13,8 @@ break kl_cmd_dispatcher.cpp:915
     set $count = $count+1
     continue
   end
+
+break KLConvMAC::run
 break /mnt/d/project/CSIMv2/kdp720_hw_csim_latest/src/kernels/kl_eu_conv_mac.cpp:3019
   commands
     silent

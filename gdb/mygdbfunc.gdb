@@ -19,7 +19,7 @@ define printSeqRange
 		while ($ri < $re)
 			set $ci = $cs_
 			while ($ci < $ce)
-				printf "%d, ", (*$seq)[$chi*$r*$c + $ri*$c + $ci]
+				printf "%d\n", (*$seq)[$chi*$r*$c + $ri*$c + $ci]
 				set $ci = $ci + 1
 				set $psrcnt = $psrcnt + 1
 			end
