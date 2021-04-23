@@ -2,7 +2,7 @@
 #clean all
 rm -rf cscope.* tags
 #build the list of files to be in database
-find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) > cscope.files
+find "$(cd .; pwd)" -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) > cscope.files
 #find ./  -name "*.c" -o -name "*.h" -o -name "*.cpp" > cscope.files
 cscope -Rbq -i cscope.files
 #-R: 在生成索引檔時，搜索子目錄樹中的代碼
