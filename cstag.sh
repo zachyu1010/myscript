@@ -5,6 +5,7 @@ rm -rf cscope.* tags
 find "$(cd .; pwd)" -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) > cscope.files
 #find ./  -name "*.c" -o -name "*.h" -o -name "*.cpp" > cscope.files
 cscope -Rbq -i cscope.files
+
 #-R: 在生成索引檔時，搜索子目錄樹中的代碼
 #-b: 只生成索引檔，不進入cscope的介面
 #-q: 生成cscope.in.out和cscope.po.out檔，加快cscope的索引速度
@@ -13,4 +14,5 @@ cscope -Rbq -i cscope.files
 
 #ctags -R --exclude=.svn --exclude=.git
 #find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) -exec ctags {} +
-ctags -L cscope.files
+ctags -L cscope.files -R --fields=+lSia --c++-kinds=+p --extra=+q --exclude=.svn --exclude=.git
+
