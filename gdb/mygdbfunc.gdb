@@ -13,6 +13,7 @@ define dumpIntSeqRange
     set $ce = $arg10
 	
     set logging off
+    set logging overwrite on
     eval "set logging file %s", $filename
     set logging redirect on
     set pagination off
@@ -35,6 +36,7 @@ define dumpIntSeqRange
     end
 
     set logging off
+    set logging overwrite off
     set pagination on
     set logging redirect off
     set logging file gdb.txt
@@ -50,6 +52,7 @@ define dumpFloatSeq
     eval "set logging file %s", $filename
     set logging redirect on
     set pagination off
+    set logging overwrite on
     set logging on
     
     set $idx = 0	
@@ -58,6 +61,7 @@ define dumpFloatSeq
     end
 
     set logging off
+    set logging overwrite off
     set pagination on
     set logging redirect off
     set logging file gdb.txt
@@ -73,6 +77,7 @@ define dumpIntSeq
     eval "set logging file %s", $filename
     set logging redirect on
     set pagination off
+    set logging overwrite on
     set logging on
     
     set $idx = 0	
@@ -81,6 +86,33 @@ define dumpIntSeq
     end
 
     set logging off
+    set logging overwrite off
+    set pagination on
+    set logging redirect off
+    set logging file gdb.txt
+end
+
+
+#dumpCharSeq: print number of the int8  value specified by length. 
+define dumpCharSeq
+    set $filename = $arg0
+    set $addr = $arg1
+    set $len = $arg2
+
+    set logging off
+    eval "set logging file %s", $filename
+    set logging redirect on
+    set pagination off
+    set logging overwrite on
+    set logging on
+    
+    set $idx = 0	
+    while ($idx < $len)
+        printf "%d\n", ((char *)$addr)[$idx++]
+    end
+
+    set logging off
+    set logging overwrite off
     set pagination on
     set logging redirect off
     set logging file gdb.txt
