@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from pudb import set_trace; set_trace()
 
 import sys
 import re
@@ -27,7 +28,7 @@ try:
     with open(iFile, 'r') as ifd:
         fd = ifd.read()
         fd = re.split('\s+', fd)
-        with open(oFile, 'w') as ofd: 
+        with open(oFile, 'w') as ofd:
             for ch in range (ch_st, ch_end):
                 for r in range (r_st, r_end):
                     offset = ch*rows*cols + r*cols
