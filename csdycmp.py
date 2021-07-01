@@ -2,13 +2,9 @@
 
 import sys
 import csv
+import os
 from os import listdir
 from os.path import isfile, join
-
-
-ioInfoCsvPath = sys.argv[1]
-csDir = sys.argv[2]
-dyDir = sys.argv[3]
 
 
 def cmpTwoSeqFile(path1, path2):
@@ -29,38 +25,48 @@ def cmpTwoSeqFile(path1, path2):
 
             return (True, len(f1), idx)
 
+if __name__ == '__main__':
+    try:
+        ioInfoCsvPath = sys.argv[1]
+        csDir = sys.argv[2]
+        dyDir = sys.argv[3]
 
-ioInfo = []
-with open(ioInfoCsvPath, newline='') as f:
-    reader = csv.reader(f)
-    ioInfo = list(reader)
 
-ioInfo = [ \
-        y[0:2]+y[2:3]+[int(y[3])]+[int(y[4])]+[int(y[5])]+y[6:] \
-        for y in ioInfo \
-        if y[0] == 'o'
-        ]
+        ioInfoCsvPath = os.path.abspath(ioInfoCsvPath)
+        ioInfo = []
+        with open(ioInfoCsvPath, newline='') as f:
+            reader = csv.reader(f)
+            ioInfo = list(reader)
 
-dySeqs = [ \
-        f for f in listdir(dyDir) \
-        if isfile(join(dyDir, f)) and 'fx.txt' in f \
-        ]
+            ioInfo = [ \
+                    y[0:2]+y[2:3]+[int(y[3])]+[int(y[4])]+[int(y[5])]+y[6:] \
+                    for y in ioInfo \
+                    if y[0] == 'o'
+                    ]
 
-for y in ioInfo:
-    dyTmps = [f for f in dySeqs if y[2] in f]
-    dyFn = sorted(dyTmps, key=len)[0]
-    dyPath = join(dyDir, dyFn)
-    csFn = "dma2seq_" + y[1] + ".seq"
-    csPath = join(csDir, csFn)
+            dySeqs = [ \
+                    f for f in listdir(dyDir) \
+                    if isfile(join(dyDir, f)) and 'fx.txt' in f \
+                    ]
 
-    (isEqu, flen, idx) = cmpTwoSeqFile(csPath, dyPath)
-    (chs, rows, cols) = y[3:6]
+            for y in ioInfo:
+                dyTmps = [f for f in dySeqs if y[2] in f]
+                dyFn = sorted(dyTmps, key=len)[0]
+                dyPath = join(dyDir, dyFn)
+                csFn = "dma2seq_" + y[1] + ".seq"
+                csPath = join(csDir, csFn)
 
-    #print(isEqu, flen, idx, csFn, dyFn)
-    if isEqu == False:
-        chIdx = idx // (rows * chs)
-        rowIdx = (idx % (rows * chs)) // rows
-        colIdx = idx % chs
-        print(flen, idx, chIdx, rowIdx, colIdx, csFn, dyFn)
-        break
+                (isEqu, flen, idx) = cmpTwoSeqFile(csPath, dyPath)
+                (chs, rows, cols) = y[3:6]
+
+                chIdx = idx // (rows * chs)
+                rowIdx = (idx % (rows * chs)) // chs
+                colIdx = idx % chs
+                if isEqu == True:
+                    print(flen, idx, chIdx, rowIdx, colIdx, csFn, dyFn)
+                else:
+                    print("-> mismatch: ", flen, idx, chIdx, rowIdx, colIdx, csFn, dyFn)
+                    break
+    except:
+        print("usage: csdycmp.py ioinfo.csv csimDumpDir dynastyDumpDir")
 
