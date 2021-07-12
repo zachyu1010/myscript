@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-from pudb import set_trace; set_trace()
-
 import sys
+import os
 import re
 
 #print('Number of arguments:' + str(len(sys.argv)) +  ' arguments.')
@@ -11,7 +10,7 @@ try:
     iFile = sys.argv[1]
     (rows, cols, chs) = sys.argv[2].split('x')
     (r_st, r_end, c_st, c_end, ch_st, ch_end) = sys.argv[3].split(',')
-    oFile = sys.argv[1] + "_" + rows + "x" + cols + "x" + chs + "_" + r_st + "." + r_end + "." + c_st + "." + c_end + "." + ch_st + "." + ch_end
+    oFile = os.path.basename(sys.argv[1]) + "_" + rows + "x" + cols + "x" + chs + "_" + r_st + "." + r_end + "." + c_st + "." + c_end + "." + ch_st + "." + ch_end
     rows = int(rows)
     cols = int(cols)
     chs = int(chs)
