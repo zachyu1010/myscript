@@ -2,7 +2,7 @@
 #clean all
 rm -rf cscope.* tags
 #build the list of files to be in database
-find "$(cd .; pwd)" -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) > cscope.files
+find "$(cd .; pwd)" -type d \( -path ./build \) -o -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.c" \) > cscope.files
 #find ./  -name "*.c" -o -name "*.h" -o -name "*.cpp" > cscope.files
 cscope -Rbq -i cscope.files
 

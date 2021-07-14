@@ -28,9 +28,11 @@ def cmpTwoSeqFile(path1, path2):
 if __name__ == '__main__':
     try:
         ioInfoCsvPath = sys.argv[1]
-        csDir = sys.argv[2]
-        dyDir = sys.argv[3]
-
+        cmpType = sys.argv[2]
+        csDir = sys.argv[3]
+        dyDir = sys.argv[4]
+        if cmpType != 'o' and cmpType != 'c':
+            raise
 
         ioInfoCsvPath = os.path.abspath(ioInfoCsvPath)
         ioInfo = []
@@ -41,19 +43,39 @@ if __name__ == '__main__':
             ioInfo = [ \
                     y[0:2]+y[2:3]+[int(y[3])]+[int(y[4])]+[int(y[5])]+y[6:] \
                     for y in ioInfo \
-                    if y[0] == 'o'
+                    if y[0] == cmpType
                     ]
 
-            dySeqs = [ \
-                    f for f in listdir(dyDir) \
-                    if isfile(join(dyDir, f)) and 'fx.txt' in f \
-                    ]
+            csSeqs = []
+            dySeqs = []
+            if cmpType == 'o':
+                dySeqs = [ \
+                        f for f in listdir(dyDir) \
+                        if isfile(join(dyDir, f)) and 'fx.txt' in f \
+                        ]
+            elif cmpType == 'c':
+                csSeqs = [ \
+                        f for f in listdir(csDir) \
+                        if isfile(join(csDir, f)) and 'cpu_node_' in f \
+                            and '.seq' in f and  '_out_' in f\
+                        ]
+
+                dySeqs = [ \
+                        f for f in listdir(dyDir) \
+                        if isfile(join(dyDir, f)) and 'fl.txt' in f \
+                        ]
 
             for y in ioInfo:
                 dyTmps = [f for f in dySeqs if y[2] in f]
                 dyFn = sorted(dyTmps, key=len)[0]
                 dyPath = join(dyDir, dyFn)
-                csFn = "dma2seq_" + y[1] + ".seq"
+
+                csPath = ''
+                if cmpType == 'o':
+                    csFn = "dma2seq_" + y[1] + ".seq"
+                elif cmpType == 'c':
+                    csTmps = [f for f in csSeqs if y[2].strip('_o0') in f]
+                    csFn = sorted(csTmps, key=len)[0]
                 csPath = join(csDir, csFn)
 
                 (isEqu, flen, idx) = cmpTwoSeqFile(csPath, dyPath)
@@ -68,5 +90,5 @@ if __name__ == '__main__':
                     print("-> mismatch: ", flen, idx, chIdx, rowIdx, colIdx, csFn, dyFn)
                     break
     except:
-        print("usage: csdycmp.py ioinfo.csv csimDumpDir dynastyDumpDir")
+        print("usage: csdycmp.py ioinfo.csv type csimDumpDir dynastyDumpDir")
 
