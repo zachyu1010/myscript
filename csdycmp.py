@@ -81,9 +81,9 @@ if __name__ == '__main__':
                 (isEqu, flen, idx) = cmpTwoSeqFile(csPath, dyPath)
                 (chs, rows, cols) = y[3:6]
 
-                chIdx = idx // (rows * chs)
-                rowIdx = (idx % (rows * chs)) // chs
-                colIdx = idx % chs
+                chIdx = idx // (rows * cols)
+                rowIdx = (idx % (rows * cols)) // cols
+                colIdx = idx % cols
                 if isEqu == True:
                     print(flen, idx, chIdx, rowIdx, colIdx, csFn, dyFn)
                 else:
