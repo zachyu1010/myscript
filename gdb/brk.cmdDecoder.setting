@@ -1,0 +1,7 @@
+break kl_cmd_dispatcher.cpp:906
+  commands
+    silent
+    print pCmd->op
+    printf "0x%X, %d\n", pCmd->u16RegIdx*2, pCmd->u16Data
+    continue
+  end
